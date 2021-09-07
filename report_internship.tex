@@ -1,0 +1,635 @@
+\documentclass{article}
+\usepackage{titlesec}
+\usepackage[margin=3cm]{geometry}
+\usepackage{titling}
+\usepackage{amsmath} %math things
+\usepackage{graphicx} %images 
+\usepackage{multicol} %for multiple columns
+\setlength{\columnsep}{1cm}%multi column spacing
+\usepackage{longtable} % for long tables
+\usepackage[backend=bibtex,style=numeric]{biblatex} % for references
+\addbibresource{biblio.bib}
+\usepackage{pdfpages} % to insert pdf 
+\usepackage{float}
+\usepackage{gensymb} %degree
+\usepackage[utf8]{inputenc}
+%\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{nomencl}%for the nomenclature page
+\makenomenclature
+
+\titleformat{\section}
+{\bfseries}
+{\thesection}
+{.2cm}
+{}[\titlerule]
+
+
+\titleformat{\subsection}
+{}
+{\thesubsection}
+{.1cm}
+{}
+
+
+\titleformat{\subsubsection}
+{\bfseries}
+{}
+{0cm}
+{}
+
+
+%begining of the doc
+
+\begin{document}
+%\includepdf{Cover.pdf}
+
+\input{titlepage}
+
+%%%%Nomenclature
+\section*{\LARGE{Nomenclature}}
+\vspace{2cm}
+\begin{tabular}{ll}
+
+$\theta_o$ & Dimensionless temperature at the outer vertical surface\\
+$\theta_i$ & Dimensionless temperature at the inner vertical surface\\
+$\tau$ & Period of exciting temperature (s)\\
+$p$ & Time period (s)\\
+$a$ & Amplitude\\
+ & \\
+$l$ & Length (mm)\\
+$b$ & Breadth (mm)\\
+$h$ & Height (mm)\\
+$t$ & Thickness (mm)\\
+ & \\
+$Type A$ & Brick with no insulating material inside the cavity\\
+$Type B$ & Brick with insulating material of 20mm inside the cavity\\
+$Type C$ & Brick with insulating material of 40mm inside the cavity\\
+$Type D$ & Brick with insulating material of 70mm inside the cavity\\
+ & \\  
+$Q$ & Global heat flux ($W/m^{2}$)\\
+$T_{out}$ & Temperature at outer vertical surface \\
+$T_{in}$ & Temperature at inner vertical surface \\
+ & \\
+$U$ & Dimensionless velocity in the x-direction \\
+$V$ & Dimensionless velocity in the y-direction\\
+$P$ & Dimensionless pressure\\
+$\theta_f$ & Dimensionless fluid temperature\\
+$Ra$ & Rayleigh number\\
+$Pr$ & Prandtl number\\
+$\nu_f$ & Kinematic viscosity of the fluid ($m^2/s$) \\
+$\alpha_f$ & Diffusivity of the fluid ($m^2/s$)\\
+
+
+%\nomenclature{\(c\)}{Speed of light in a vacuum}
+%\nomenclature{\(c\)}{Speed of light in a vacuum}
+
+\end{tabular}
+
+\newpage
+\section*{Abstract}
+This present work aims to study the thermal behaviour of four types of hollow bricks numerically in transient state. The couple heat transfer through conduction, natural convection is taken into account. The inside wall is kept at a constant temperature throughout the simulation and the outside wall is subjected to sinusoidal excitation. All the other walls are considered adiabatic. The governing equations are discretized by the finite volume method and  solved using ANSYS 2021 R1 ACADEMIC . The main parameter studied is the thickness of the insulating material and its effect on the global heat flux. Which is then plotted for all the four models (fig.\ref{figA}, fig.\ref{figB}, fig.\ref{figC}, fig.\ref{figD}) and the results showed that the type D, where the cavities were completely filled with the insulating material allowed better reduction of heat transfer  (about 57\% more than Type A ) across the brick .
+
+\begin{multicols}{2}
+%Introduction part
+\section{Introduction}
+From the last couple of years it has been observed that due to global warming Morocco or many other countries are facing severe climate conditions. It becomes very difficult especially during the peak summer and winter days. People heavily rely upon air conditioning and heaters to meet their comfort inside a room and which leads to the consumption of a large part of energy. In this regard it is very important to reduce the thermal loads. One of the possibilities to reduce thermal loads can be achieved by using hollow bricks instead of solid bricks in the construction of building walls. The bricks are designed in such a way that the thermal resistance is increased and minimum transfer of heat takes place through the bricks. In such a way for cooling and heating energy consumption required is reduced.
+
+             Coupled heat transfer through hollow bricks has been studied frequently in recent years. \textcite{boukendil2009numerical} investigated heat transfer numerically through double hollow bricks of various types. Bricks with different numbers of holes, varying aspect ratio of holes and air layer thickness were considered for the study. They concluded that the number of vertical holes and the position of air layer in the hollow brick slightly affected the overall heat transfer. \textcite{sun2009numerical} studied numerically heat transfer through hollow bricks for different configurations. They analyzed the effects of enclosure configuration with the same enclosure staggered and same void volume fraction. \textcite{antar2009conjugate} investigated conjugate natural convection and conduction through hollow brick. It was reported that with the increasing number of cavities for a brick with the same width, the heat loss decreases. \textcite{principi2012thermal} studied the thermal performance by applying low emissivity material on the internal surfaces of hollow bricks. It was seen that by using emissivity of 0.5 the overall conduction reduced by 20\%. \textcite{jamal2021thermal} investigated thermal analysis of hollow clay brick submitted to sinusoidal heating. He took three types of bricks with the same hole configuration but varying the number of the same from type one to type three. It was observed that with an increase in the number of holes heat transfer across the brick decreased significantly.
+             
+             In our knowledge, analysis related to coupled heat transfer through hollow clay bricks for sinusoidal heating are very few. In our study we are analyzing coupled heat transfer by conduction and natural convection through hollow clay bricks. We are taking four types of bricks (Type A , Type B, Type C and Type D) as shown in the Fig 3 ,4, 5 and 6. The outer surface of the bricks will be subjected to sinusoidal excitation and the inner surface will be isothermal. The size and number of cavities of the bricks are kept constant while applied low emissivity material in the inner surfaces of the cavities are of different thickness. The present study mainly aims to investigate the behavior of heat transfer in these four types of bricks.
+             
+
+
+%Literature Review
+\section{Literature Review}
+\textcite{kanellopoulos2017numerical} has performed numerical analysis and modelling of heat transfer processes through perforated clay brick masonry walls. Issues like perforated brick geometry, mortar joints, thermophysical properties of building material which can affect the overall process were also considered. A well known CFD program based on FEM was adopted to do the transient analysis. It was concluded that in the region of air cavity, compared with radiation, the heat transfer due to convection is negligible and the effect of radiation for such a layer is fundamental. For the analysis involving air cavities it is essential to consider thermal emissivity coefficients.
+
+\textcite{chen2008numerical} studied numerically heat transfer and flow in a passive solar composite wall with porous absorber. Two types of walls such as contact type passive solar composite wall with porous absorber and separation type passive solar composite wall with porous absorber were considered for this numerical analysis. They employed unsteady numerical simulation and SIMPLER methods. It was concluded that factors like thermal conductivity of porous layer, particle size, porous absorber position and porosity on the air temperature in the heated room has significant influence.
+
+\textcite{jamal2021thermal} performed numerical analysis to study thermal performance of a hollow clay brick submitted to sinusoidal heating. They took three different types of hollow clay bricks as type 1 with 3 cavities, type 2 with 6 cavities and type 3 with 12 cavities. They applied sinusoidal thermal excitation on the outside vertical surface and the inner vertical surface was kept isothermal. Finite volume approach was applied to discretize the governing equations and a SIMPLE algorithm was used to solve it. It was concluded that when passing from type 1 to type 2 average heat flux decreases by 208\% and it decreases by about 29\% when passing from type 2 to type 3.
+
+\textcite{li2017thermal} has performed an experimental study on the thermal and energy performance of a novel lightweight steel-bamboo wall structure using Ansys fluent software for the simulation purpose. Internal surface temperature was approximately constant with little fluctuation and external surface temperature fluctuated during daytime. Surface temperature which is relatively stable during night time. Thermal performance of steel bamboo wall is high and heat transfer coefficient improved by 26.1\% - 48.4\% and it indicated that energy required is low for heating in winter compared to common wall. During summer nights the energy requirement for cooling is low, due to relatively low time lag ( 2hrs) which contributes to lower indoor temperature. The main drawback of the steel bamboo construction, higher indoor air temperature may be experienced during the hottest hours in summer compared to brick walls.
+ 
+Lacrri\`ere et al. [11] has performed a numerical study of the flow heat and the heat transfer in a vertically perforated brick. In studies they investigated that in a single cavity fluid rises along the hot face and falls along the cold face and they found that the average Nusselt number is equal to 1 that means conduction heat transfer dominates. In double communication the rising velocity is not large and there is no thermal boundary layer along the faces and the temperature profile is also linear and they calculated the average Nusselt number is very close to the unity. They also investigated the influence of masonry bedding on several strips on the global heat transfer and they found that masonry bedding does not diminish the insulating power of the bricks . In the ruptures the average Nusselt number is greater than 1 that means convection cannot be neglected and increases the heat transfer.
+ 
+\textcite{nasir2020thermal} has performed an experimental study to evaluate the thermal performance of double brick wall construction for hotel facades using infrared thermography to analyse the external surface temperature of the building facade and to analyse the thermal images captured by the Fluke Ti20, images imported IR 4.0 computer programme. They found that double brick wall construction absorbs substantial heat.The difference in average surface temperature gradually decreases with the increase of the time due to different thermal inertia. Energy accumulated within the exterior wall is released back to its surrounding environment as double brick walls have relatively high thermal mass.The heat conduction through windows (Qgc) forms the smallest percentage of the total Overall Thermal Transfer Value (OTTV), with only 16\% of the total OTTV. The dependence on innovative passive building envelope design to improve cooling energy efficiency.
+ 
+\textcite{manoram2021experimental} has performed an experimental study on the heat transfer rate and intermediate surface temperature analysis through the traditional method of composite wall heat transfer. In the experiment, they investigated the method to identify the rate of heat flux and outside temperature through the mathematical relation with the heat transfer rate, thermal resistance, temperature differences on the furnace wall with inner temperature of 1100 $\degree C$ and outer surface temperature of 31 $\degree C$.  the composite wall consisted of three layers made up of refractory bricks, fire bricks and insulation plaster. They varied the thickness of the insulation layer for different experiment and came to a conclusion that the thermal resistance plays major role in heat transfer where thickness of insulation is directly proportional to the thermal resistance of the corresponding material I.e., the heat transfer rate per unit area is inversely proportional to the thickness of the insulation layer.
+ 
+\textcite{li2020experimental} has performed an experimental study on thermal performance of a building wall with the wall insulation systems with three different insulation materials including pasted Vacuum Insulation Panel (VIP) boards, dry-hung composite VIP boards, and extruded polystyrene (XPS) insulation boards, and studying them in different working conditions like winter, summer, dry and wet conditions. Also, they assessed the insulation performance under some adverse conditions such as punctures in the VIP boards. In this experiment, an environmental chamber is used to simulate where temperature, humidity, heat flow, solar radiation, wind speed and pressure can be measured and having an environment controllable range of temperature from (-15 to 15  $\degree C$) , humidity (10 to 90\%), and solar radiation (0 to 650 $W/m^2$). This experiment used a heat flow meter method to measure temperature, heat flow rate and thermal resistance of the wall. It was concluded that the thermal resistance of the dry-hung VIP wall is greater than that of the pasted VIP wall because the static air interlayer present behind the dry-hung VIPs and the measured thermal resistance with the 50 mm pasted XPS is 32\% lower than that of the wall with the 12 mm pasted VIPs.  Another salient observation made was that after the VIP is punctured, its thermal resistance will be greatly reduced and in a wet environment, it declines more.
+ 
+\textcite{pitel2019dynamic} carried out a numerical study to investigate the heat transfer through external building construction using a mathematical and simulation model in the MATLAB/Simulink software. They considered continuum and continuously distribution of thermal resistance and capacity on a single layered of plane wall and the model has been tested for different real wall material parameters(brick wall, insulated wall ) .They observed that thermal conductivity of the simulated multilayered wall is 0.15 W/(mK) and the temperature of the wall surface is higher than the temperatures of the heated window surface and temperature of the cooled wall surface is lower than the temperature of the cooled window surface. And they also observed that with worse thermal properties heat loss through the window is higher than through the wall with better thermal properties.  The impact of the dynamic changes of the outdoor temperature had an effect on the temperature of the cooled wall or windows surface.
+
+\textcite{baig2008conduction} has performed a numerical investigation on a 2 dimensional model for the effect of cavities layout on the thermal resistance of the block using control volume analysis. They considered the heat transfer by conduction occurs in the solid parts and natural convection occurs within the cavities and more nodes were concentrated at all the corners where higher gradients exist within the both solid and gas phases. They found that resistance  and heat leak of hollow bricks changes with change in the layout of the cavities.By changing shape and size of the cavities there is enhanced thermal insulation increasing through the resistance without affecting the structural characteristic of the blocks. Thermal bridges decreased by decreasing the thickness of the solid material used. Cavities with high aspect ratio and less width decrease the convection heat transfer and if width reduces Rayleigh number decrease hence convection heat transfer coefficient also reduces.
+
+\textcite{uriarte2019thermal} studied thermal performance of walls with different passive cooling techniques using some traditional material in Mexico. They have studied walls of three different cities with a passive cooling technique for each wall for a period of 24 hours. They have selected three different types of bricks namely red brick(L), solid blocks(B) and hollow blocks(T) and selected four different layers of plasters with different layers of material named as 1, 2, 3 and 4. Thus, they considered twelve different walls for the study. Their results showed that the total thermal load considerably increased configurations L1, T1 and B1 (1 stands for the walls with single layer of plaster) in all the three cities, compared to configurations L4, T4 and B4 (4 stands for an added layer of insulating material, plus a layer of plaster plus a layer of white reflective coating), respectively. In the study they finally concluded that the configuration with the lowest thermal loads and economically viable based on the recovery of investment time was configuration T4 I.e., hollow blocks with an added layer of insulating material, plus a layer of plaster plus a layer of white reflective coating with a reduction on the thermal loads between 41.1 and 48.8\%. Hence, they finalised among those all twelve types of walls, the T4 wall was the best option for thermal flux reduction.
+
+\textcite{sassine2020investigation} carried out a numerical study for improvement of thermal performance of external masonry walls, impact of the blocks’ internal configuration on their mechanical strength and thermal properties. Ten different configurations were studied with a change of void ratios of about 40\% and the same external dimensions were compared thermally and mechanically in order to investigate the effect of bulkheads on their performance. The numerical results indicated that the longitudinal bulkheads improve the thermal resistance of the blocks and thus reduce the heat flux, while the transversal bulkheads help in reduction of the thermal performance of the hollow blocks by creating inside heat bridges in the structure. Also, according to their study they found out that mechanical behaviour of the blocks varies slightly in vertical compression which reduces the influence of this parameter in the selection of the best shape configuration.
+
+\textcite{bai2017study} studied a different type of hollow shale block with 29 rows of holes designed and produced to reduce energy consumption in buildings. They worked out the thermal properties of such blocks and walls made by those. At first, they used the guarding heat-box method to obtain the heat transfer coefficient of the hollow shale block walls and found out the heat transfer coefficient to be 0.726 $W/(m^2.K)$, which is much preferable over traditional wall materials. Also, they calculated theoretical value of the heat transfer coefficient to be 0.546 $w/(m^2.K)$ . Finite element analysis software, ANSYS was used to simulate the one-dimensional steady heat conduction process for the block and walls. Their work proved that with the outstanding self-insulation properties, these hollow shale blocks could be useful for wall material without using any other additive insulation layer.
+
+Cianfrini et al. [7] worked on the topic to make clear the conclusion of some myths regarding the thermal properties of blocks like high mass means high thermal inertia, a high thermal inertia of the outer walls reduces the cooling peak load and the related energy demand etc.  They performed numerical and experimental studies on thermal inertia of hollow envelope components. They implemented a finite-volume method that is used to solve the 2D equation of heat transfer by conduction. To analyse the heat flux, they used the method of response using a triangular-pulse temperature excitation. . How the type of clay and the insulating filler materials affect the heat flux are thoroughly discussed in the paper. The results showed that as clay and insulating filler materials’ thermal diffusivities are more important controlling parameters, so the wall front mass is not the basic independent variable for the thermal behaviour.
+
+
+%numeerical section
+\section{Numerical Procedure and Validation}
+Finite volume method is used to discretize governing equations based on control volume approach. Second order implicit scheme is used for transient formulation and second order upwind scheme is used for energy and momentum equations. The SIMPLE algorithm is used to solve the momentum equations. The resulting algebraic equations are solved using ANSYS 2021 R1 ACADEMIC. The iterative calculations carried out until solution convergence.
+
+
+The above processes are tested to validate the work done on \textcite{jamal2021thermal}. The temperature on the left face is given by $\theta_e = 1+a \times \sin(2 \pi  \tau /p)$ and on the right face it is $\theta_i = 0$ where $\tau$ is  the period of exciting temperature, p is period and a is the amplitude of fluctuation. For validation work we have taken two types of hollow bricks with the same configurations as that of [5]. We have calculated global heat flux on the inner wall and plotted against a time interval of four days which is shown in figure 1. It is then compared with the graph (figure 2) obtained in their work [5].
+
+
+
+By comparing fig.\ref{validation1} and fig.\ref{validation2} we can say that a similar trend has been established.
+\end{multicols}
+
+
+\begin{figure}[H]
+\begin{center}
+
+\includegraphics [width=13cm]{val_paper5.PNG}  
+
+\end{center}
+\caption{Global Heat Flux of the of the studied literature}\label{validation1}
+\end{figure}
+
+
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics [width=13cm]{gloal_validation.PNG}
+
+\end{center}
+\caption{Validation Graph of Global Heat Flux }\label{validation2}
+\end{figure}
+
+
+
+\begin{multicols}{2}
+
+% MODEel
+\section{Mathematical Model}
+The four configurations of hollow bricks to be investigated are illustrated in fig.\ref{figA}, fig.\ref{figB}, fig.\ref{figC}, fig.\ref{figD}. These hollow bricks are constructed by keeping the dimensions constant. Each configuration is formed by three holes of length $l$, breadth $b$ and height $h$. Insulating layers of varying size are introduced in the inside surface of the holes. A sinusoidal thermal solicitation given by the equation $$T_{out} = 303K + 20sin\left(\frac{2.\pi.\tau}{24 \times 3600}\right)$$, where $\tau$ is the period of exciting temperature; is applied to the left face of the studied hollow brick and the right face is kept isothermal and maintained at a constant temperature $T_{in} = 293K$. All other faces are considered adiabatic. The air in the different cavities is modeled as an incompressible ideal fluid. The heat transfer is 2-D and laminar. The fluid is assumed to be not participating in radiation. 
+
+The dimensionless governing equations that are used are given as follows: \\
+
+\end{multicols}
+
+%$$ \frac{\delta U}{\delta X} + \frac{\delta V}{\delta Y} = 0 $$
+
+
+%$$ \frac{\delta \theta_f}{\delta\tau} + U\frac{\delta \theta_f}{\delta X} + V\frac{\delta \theta_f}{\delta Y} = \frac{\delta^2 \theta_f}{\delta X^2} + \frac{\delta^2 \theta_f}{\delta Y^2} $$
+
+%$$ \frac{\delta U}{\delta\tau} + U\frac{\delta U}{\delta X} + V\frac{\delta V}{\delta Y} = -\frac{\delta P}{\delta X} + Pr\left(\frac{\delta^2 U}{\delta X^2} + \frac{\delta^2 U}{\delta Y^2}\right) $$
+
+
+%$$ \frac{\delta V}{\delta\tau} + U\frac{\delta V}{\delta X} + V\frac{\delta V}{\delta Y} = -\frac{\delta P}{\delta X} + Pr\left(\frac{\delta^2 U}{\delta X^2} + \frac{\delta^2 U}{\delta Y^2}\right) + Ra.Pe.\theta_a $$
+
+
+
+\begin{center}
+  $   \frac{\partial U}{\partial X} + \frac{\partial V}{\partial Y} = 0 $        \qquad\qquad \qquad\qquad\qquad\qquad\quad\quad\quad \quad\quad \quad \quad \quad   \  \ ................. (1) \\
+ \end{center}    
+
+
+\begin{center}
+$ \frac{\partial \theta_f}{\partial \tau} + U\frac{\partial \theta_f}{\delta X} + V\frac{\partial \theta_f}{\delta Y} = \frac{\partial^2 \theta_f}{\partial X^2} + \frac{\delta^2 \theta_f}{\delta Y^2}$  \qquad\qquad\quad \quad\quad  \quad\quad  \quad \quad  \ \ ................. (2)\\
+\end{center}
+\begin{center}
+$ \frac{\partial U}{\partial \tau} + U\frac{\partial U}{\partial X} + V\frac{\partial V}{\partial Y} = -\frac{\partial P}{\partial X} + Pr\left(\frac{\partial^2 U}{\partial X^2} + \frac{\partial^2 U}{\partial Y^2}\right) $  \quad\quad\quad \quad   \quad  \quad \ ................. (3)\\
+\end{center}
+\begin{center}
+
+$ \frac{\partial V}{\partial \tau} + U\frac{\partial V}{\partial X} + V\frac{\partial V}{\delta Y} = -\frac{\partial P}{\partial X} + Pr\left(\frac{\partial^2 U}{\partial X^2} + \frac{\partial^2 U}{\partial Y^2}\right) + Ra.Pe.\theta_f$       \quad \ ................ (4) \\
+\end{center}
+
+
+\begin{multicols}{2}
+Where $U$ and $V$ are the dimensionless velocities in the direction of $X$ and $Y$ directions respectively. $P$ is the pressure of the fluid inside and $\theta_f$ is the dimensionless fluid temperature.
+
+$R_a$ is the Rayleigh number,  which is given by the equation
+
+ $R_a = \frac{g\beta(T_o - T_i)L^3}{\alpha_f v_f}$
+
+$P_r$ is the Prandtl number and is given by the equation
+
+ $ P_r = \frac{\nu_f}{\alpha_f}$  
+
+\end{multicols}
+
+\begin{table}[H]
+\begin{center}
+\caption{Applied boundary conditions } 
+\begin{tabular}{p{5.5cm}p{3cm}p{5.5cm}}
+\hline
+ Location & Boundary type & Condition \\
+\hline
+Left Vertical Surface &Wall & Sinusoidal thermal excitation is applied (Dirichlet) \\
+\hline 
+Right Vertical Surface & Wall &Isothermal and maintained at constant temperature, $T_{in}$ (Dirichlet) \\
+\hline 
+Horizontal Surface at Top of the Brick & Wall & Adiabatic \\
+\hline
+Horizontal Surface at Bottom of the Brick & Wall & Adiabatic \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+\section{Schematic Diagram}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics [height=8cm]{0mm.jpg}
+\hspace{2cm}
+\includegraphics [height=8cm]{0mm.2.jpg}
+\end{center}
+\caption{Type A }\label{figA}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics [height=8cm]{20mm.jpg}
+\hspace{2cm}
+\includegraphics [height=8cm]{20mm.2.jpg}
+\end{center}
+\caption{Type B }\label{figB}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics [height=8cm]{40mm.jpg}
+\hspace{2cm}
+\includegraphics [height=8cm]{40mm.2.jpg}
+\end{center}
+\caption{Type C }\label{figC}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics [height=8cm]{70mm.jpg}
+\hspace{2cm}
+\includegraphics [height=8cm]{70mm.2.jpg}
+\end{center}
+\caption{Type D}\label{figD}
+\end{figure}
+
+\begin{table}[H]
+\begin{center}
+\caption{Dimensions of the model } 
+\begin{tabular}{lllll}
+\hline
+  & length $l$(mm) & Breadth $b$ (mm) & Height $h$ (mm) \\
+\hline
+Brick  & 200 & 100 & 100 \\
+Hole & 70 & 50 & 100 \\
+\hline 
+\end{tabular}
+\end{center}
+\end{table}
+
+
+\begin{table}[H]
+\begin{center}
+\caption{Dimensions of the insulating material} 
+\begin{tabular}{llll}
+\hline
+ Model  & Length $l$(mm) & Breadth $b$ (mm) & Thickness $t$ (mm) \\
+\hline
+Type A  & 100 & 50 & 0 \\
+Type B  & 100 & 50 & 20 \\
+Type C  & 100 & 50 & 40 \\
+Type D  & 100 & 50 & 70 \\
+\hline 
+\end{tabular}
+\end{center}
+\end{table}
+
+
+\section{Materials used}
+The materials used in the model are:
+\begin{itemize}
+\item Brick: Clay
+\item Fluid: Ideal incompressible air
+\item Insulating material: HVIP  with noncombustible fumed Silica as the core material
+\end{itemize}
+
+
+\begin{table}[H]
+\begin{center}
+\caption{Material Properties }
+\begin{tabular}{lp{2.3cm}p{2.3cm}p{2.3cm}p{2.3cm}p{2.3cm}}
+\hline
+Material  & Density $Kg/m^3$  &Specific heat $Cp$ $J/Kg-K$ & Thermal Conductivity $W/m-K$ & Viscosity $Kg/m-s$ & Molecular Weight $Kg/Kmol$ \\
+\hline
+Brick clay  & 1700 & 920 & 1 & -  & - \\
+Air  & 1.225 & 1006.43  & 0.0242 & 1.7894e‐05 & 28.966  \\
+Insulating material   & 210 & 800 & 0.004 &- & -  \\
+\hline 
+\end{tabular}
+\end{center}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+\section{Mesh Quality}
+
+\begin{table}[H]
+\begin{center}
+\caption{Mesh Quality} 
+\begin{tabular}{lllll}
+ & Type A & Type B & Type C & Type D \\
+\hline
+Element Quality  &  &  & &  \\
+\hline
+Min  & 0.47365 & 0.51004 & 0.51004 & 0.47365 \\
+Max  & 0.9007 & 0.89533 & 0.8902 & 0.9007 \\
+Average  & 0.83224 & 0.8329 & 0.83368 & 0.83224 \\
+Standard deviation & 2.208e-002 & 2.3197e-002 & 1.8428e-002 & 2.208e-002 \\
+\hline
+\hline
+ & & & & \\
+Aspect Ratio & & & & \\
+\hline
+Min &				1.3874 & 1.5319	&		1.5433	&		1.3874 \\
+Max 		&		4.4664&3.4816		&	3.4816	&		4.4664 \\
+Average 		&	1.6895&1.6837	&		1.6825	&		1.6895 \\
+Standard deviation 	& 0.10309&	9.0611e-002	&	8.1075e-002	&	0.10309 \\
+\hline
+\hline
+ & & & & \\
+Jacobian Ratio (MAPDL) & & & & \\
+\hline
+Min		&		1&1	&		1		&	1\\	
+Max 		&		3.0551&2.6179		&	2.6179		&	3.0551\\
+Average 	&	1.0184 &1.0173	&	1.0146		& 1.0184\\
+Standard deviation 	&	9.7599e-002&9.8931e-002	&	8.7834e-002	&	9.7599e-002\\
+\hline
+\hline
+ & & & & \\
+Skewness & & & & \\
+\hline
+Min 		&		1.3057e-010&1.3057e-010	&	1.3057e-010	&	1.3057e-010\\
+Max 		&		0.55991&0.47397&	0.47397	&	0.55991\\
+Average 		&	1.7599e-002&2.3028e-002	&	2.1562e-002	&	1.7599e-002\\
+Standard deviation	&	5.0864e-002&5.8072e-002	&	4.9872e-002	&	5.0864e-002\\
+\hline
+\hline
+ & & & & \\
+Orthogonal Quality & & & &\\
+\hline
+Min		&0.44009	&	0.7946		&	0.7946	&		0.44009\\
+Max 		&	1&	1	&		1		&	1\\
+Average 		& 0.99672 &	0.99493	&	0.99619	&	0.99672\\
+Standard deviation 	& 1.4459e-002 &	1.709e-002	&	1.073e-002	&	1.4459e-002 \\
+\hline
+\hline
+ & & & & \\
+\hline
+No of Nodes 	& 155775 &	155434 & 155558	 & 155775 \\
+\hline
+No of Elements 	 & 146280 &	145890 & 146010 & 146280 \\
+\hline 
+\end{tabular}
+\end{center}
+\end{table}
+
+
+
+\begin{multicols}{2}
+%results
+\section{Results}
+The results of this present work are carried out for four types of hollow bricks having the geometric dimensions given in Table 2, 3. The thermal conductivity of solid materials viz clay and VIP material are 1 W/mK and 0.004 W/mK respectively. The amplitude is fixed to $a = 20$ while the  period of the exciting temperature is taken as $\tau= 24 \times 3600 s$.
+
+\subsection{Heat transfer analysis}
+The hourly variation of global heat flux through the inside wall of the investigated models is shown in Fig.\ref{globalhearflux}. The heat flux is calculated for a sinusoidal excitation $T_{out}$ and  constant temperature $T_{in} = 20 \degree C $  of amplitude $a = 20$ and of a time period $\tau = 24x3600 s$. From the obtained graphs it is seen that the solutions are periodic oscillations of identical period which is the same as the incident sinusoidal excitation. 
+
+A significant decrease in the overall heat flux (Qt) is observed when passing from brick of type A to D. As the thickness of the insulating material increases from type B to D , it is observed that the head transfer decreases considerably as compared with the Type A with no insulating material inside the hollow cavities.
+\end{multicols}
+
+
+%\newpage
+\begin{center}
+\begin{longtable}{lllll}
+\caption{Variation of total heat (Top View)} \label{tab:long} \\
+
+\hline \multicolumn{1}{c}{\textbf{Time[hr]}} & \multicolumn{1}{c}{\textbf{Type A}} & \multicolumn{1}{c}{\textbf{Type B}} & \multicolumn{1}{c}{\textbf{Type C}} & \multicolumn{1}{c}{\textbf{Type D}} \\ \hline 
+\endfirsthead
+
+\multicolumn{5}{c}%
+{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\hline  \multicolumn{1}{c}{\textbf{Time[hr]}} & \multicolumn{1}{c}{\textbf{Type A}} & \multicolumn{1}{c}{\textbf{Type B}} & \multicolumn{1}{c}{\textbf{Type C}} & \multicolumn{1}{c}{\textbf{Type D}} \\ \hline 
+\endhead
+
+\hline \multicolumn{5}{r}{{Continued on next page}} \\ \hline
+\endfoot
+
+\hline \hline
+\endlastfoot
+
+
+  & \includegraphics [width=2cm]{4.0.jpg} & \includegraphics [width=2cm]{1.0.jpg} & \includegraphics [width=2cm]{2.0.jpg} & \includegraphics [width=2cm]{3.0.jpg}  \\
+\hline
+After 3 hours & \includegraphics [width=2.5cm]{4.2.jpg} & \includegraphics [width=2.5cm]{1.2.jpg} & \includegraphics [width=2.5cm]{2.2.jpg} & \includegraphics [width=2.5cm]{3.2.jpg}  \\
+\hline
+After 6 hours & \includegraphics [width=2.5cm]{4.3.jpg} & \includegraphics [width=2.5cm]{1.3.jpg} & \includegraphics [width=2.5cm]{2.3.jpg} &  \includegraphics [width=2.5cm]{3.3.jpg} \\
+\hline
+After 9 hours & \includegraphics [width=2.5cm]{4.4.jpg} & \includegraphics [width=2.5cm]{1.4.jpg} & \includegraphics [width=2.5cm]{2.4.jpg} & \includegraphics [width=2.5cm]{3.4.jpg}  \\
+\hline
+After 12 hours & \includegraphics [width=2.5cm]{4.5.jpg} & \includegraphics [width=2.5cm]{1.5.jpg} & \includegraphics [width=2.5cm]{2.5.jpg} & \includegraphics [width=2.5cm]{3.5.jpg}  \\
+\hline
+After 15 hours & \includegraphics [width=2.5cm]{4.6.jpg} & \includegraphics [width=2.5cm]{1.6.jpg} & \includegraphics [width=2.5cm]{2.6.jpg} & \includegraphics [width=2.5cm]{3.6.jpg}  \\
+\hline
+After 18 hours & \includegraphics [width=2.5cm]{4.7.jpg} & \includegraphics [width=2.5cm]{1.7.jpg} & \includegraphics [width=2.5cm]{2.7.jpg} & \includegraphics [width=2.5cm]{3.7.jpg}  \\
+ \hline
+After 21 hours& \includegraphics [width=2.5cm]{4.8.jpg} & \includegraphics [width=2.5cm]{1.8.jpg} & \includegraphics [width=2.5cm]{2.8.jpg} & \includegraphics [width=2.5cm]{3.8.jpg} \\
+\hline
+After 24 hours & \includegraphics [width=2.5cm]{4.9.jpg} & \includegraphics [width=2.5cm]{1.9.jpg} & \includegraphics [width=2.5cm]{2.9.jpg} & \includegraphics [width=2.5cm]{3.9.jpg} \\
+\end{longtable}
+\end{center}
+
+
+\newpage
+
+\begin{center}
+\begin{longtable}{lllll}
+\caption{Variation of total heat in cross section view  } \label{tab:long} \\
+\hline \multicolumn{1}{c}{\textbf{Time[hr]}} & \multicolumn{1}{c}{\textbf{Type A}} & \multicolumn{1}{c}{\textbf{Type B}} & \multicolumn{1}{c}{\textbf{Type C}} & \multicolumn{1}{c}{\textbf{Type D}} \\ \hline 
+\endfirsthead
+\multicolumn{5}{c}%
+{{\bfseries \tablename\ \thetable{} -- continued from previous page}} \\
+\hline \multicolumn{1}{c}{\textbf{Time[hr]}} & \multicolumn{1}{c}{\textbf{Type A}} & \multicolumn{1}{c}{\textbf{Type B}} & \multicolumn{1}{c}{\textbf{Type C}} & \multicolumn{1}{c}{\textbf{Type D}} \\ \hline 
+\endhead
+\hline \multicolumn{5}{r}{{Continued on next page}} \\ \hline
+\endfoot
+\hline \hline
+\endlastfoot
+  & \includegraphics [width=2cm]{4.1.0.jpg} & \includegraphics [width=2cm]{1.1.0.jpg} & \includegraphics [width=2cm]{2.1.0.jpg} & \includegraphics [width=2cm]{3.1.0.jpg}  \\
+\hline
+After 3 hours & \includegraphics [width=2.5cm]{4.1.1.jpg} & \includegraphics [width=2.5cm]{1.1.1.jpg} & \includegraphics [width=2.5cm]{2.1.1.jpg} & \includegraphics [width=2.5cm]{3.1.1.jpg}  \\
+\hline
+After 6 hours & \includegraphics [width=2.5cm]{4.1.2.jpg} & \includegraphics [width=2.5cm]{1.1.2.jpg} & \includegraphics [width=2.5cm]{2.1.2.jpg} & \includegraphics [width=2.5cm]{3.1.2.jpg}  \\
+\hline
+After 9 hours  & \includegraphics [width=2.5cm]{4.1.3.jpg} & \includegraphics [width=2.5cm]{1.1.3.jpg} & \includegraphics [width=2.5cm]{2.1.3.jpg} & \includegraphics [width=2.5cm]{3.1.3.jpg}  \\
+\hline
+After 12 hours  & \includegraphics [width=2.5cm]{4.1.4.jpg} & \includegraphics [width=2.5cm]{1.1.4.jpg} & \includegraphics [width=2.5cm]{2.1.4.jpg} & \includegraphics [width=2.5cm]{3.1.4.jpg}  \\
+\hline
+After 15 hours  & \includegraphics [width=2.5cm]{4.1.5.jpg} & \includegraphics [width=2.5cm]{1.1.5.jpg} & \includegraphics [width=2.5cm]{2.1.5.jpg} & \includegraphics [width=2.5cm]{3.1.5.jpg}  \\
+\hline
+After 18 hours   & \includegraphics [width=2.5cm]{4.1.6.jpg} & \includegraphics [width=2.5cm]{1.1.6.jpg} & \includegraphics [width=2.5cm]{2.1.6.jpg} & \includegraphics [width=2.5cm]{3.1.6.jpg}  \\
+\hline
+After 21 hours  & \includegraphics [width=2.5cm]{4.1.7.jpg} & \includegraphics [width=2.5cm]{1.1.7.jpg} & \includegraphics [width=2.5cm]{2.1.7.jpg} & \includegraphics [width=2.5cm]{3.1.7.jpg}  \\
+\hline
+After 24 hours  & \includegraphics [width=2.5cm]{4.1.8.jpg} & \includegraphics [width=2.5cm]{1.1.8.jpg} & \includegraphics [width=2.5cm]{2.1.8.jpg} & \includegraphics [width=2.5cm]{3.1.8.jpg}  \\
+
+\end{longtable}
+\end{center}
+
+
+\begin{multicols}{2}
+\subsection{Velocity profiles}
+Fig. \ref{vela}, \ref{velb} and \ref{velc} shows the global velocity profiles of the three models Type A, Type B and Type C respectively for a day with a time interval of 6 hour for the temperature range given by the equations $$T_{out} = 303K + 20sin\left(\frac{2.\pi.\tau}{24 \times 3600}\right)$$ and $T_{in} = 293K$. From the simulations carried out, we can see that the global velocities decreases as we decrease the thickness of the air layer inside the holes.
+
+The maximum global velocities are 0.0857687$ms^{-2}$, 0.0614628$ms^{-2}$ and 0.0515378$ms^{-2}$ for Type A, Type B and Type C respectively
+
+\begin{table}[H]
+\caption{min. and max. velocities} 
+\begin{tabular}{lp{2cm}p{2cm}}
+\hline
+Type of brick & min velocity & maximum velocity \\
+\hline
+A & 0 & 0.0857687 \\
+B&0&0.0614628\\
+C&0& 0.0515378\\
+\hline
+\end{tabular}
+\end{table}
+
+\end{multicols}
+
+\hrule
+
+\begin{figure}[H]
+\begin{subfigure}[b]{.49\linewidth}
+\centering
+\includegraphics [width=5.5cm]{4.2.1.jpg}
+\caption{After 6 hours}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{.49\linewidth}
+\centering
+\includegraphics [width=5.5cm]{4.2.2.jpg}
+\caption{After 12 hours}
+\end{subfigure}%
+
+\begin{subfigure}[b]{.49\linewidth}
+\centering
+\includegraphics [width=5.5cm]{4.2.3.jpg}
+\caption{After 18 hours}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{.49\linewidth}
+\centering
+\includegraphics [width=5.5cm]{4.2.4.jpg}
+\caption{After 24 hours}
+\end{subfigure}%
+\caption{Velocity profiles of Type A brick at different hours of the day}\label{vela}
+\end{figure}
+
+
+
+\begin{figure}[H]
+\begin{subfigure}[b]{.49\linewidth}
+\centering
+\includegraphics [width=5.5cm]{1.2.1.jpg}
+\caption{After 6 hours}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{.49\linewidth}
+\centering
+\includegraphics [width=5.5cm]{1.2.2.jpg}
+\caption{After 12 hours}
+\end{subfigure}%
+
+\begin{subfigure}[b]{.49\linewidth}
+\centering
+\includegraphics [width=5.5cm]{1.2.3.jpg}
+\caption{After 18 hours}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{.49\linewidth}
+\centering
+\includegraphics [width=5.5cm]{1.2.4.jpg}
+\caption{After 24 hours}
+\end{subfigure}%
+\caption{Velocity profiles of Type B brick at different hours of the day}\label{velb}
+\end{figure}
+
+
+\begin{figure}[H]
+\begin{subfigure}[b]{.49\linewidth}
+\centering
+\includegraphics [width=5.5cm]{2.2.1.jpg}
+\caption{After 6 hours}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{.49\linewidth}
+\centering
+\includegraphics [width=5.5cm]{2.2.2.jpg}
+\caption{After 12 hours}
+\end{subfigure}%
+
+\begin{subfigure}[b]{.49\linewidth}
+\centering
+\includegraphics [width=5.5cm]{2.2.3.jpg}
+\caption{After 18 hours}
+\end{subfigure}\hfill
+\begin{subfigure}[b]{.49\linewidth}
+\centering
+\includegraphics [width=5.5cm]{2.2.4.jpg}
+\caption{After 24 hours}
+\end{subfigure}%
+\caption{Velocity profiles of Type C brick at different hours of the day }\label{velc}
+\end{figure}
+
+
+
+
+
+
+\begin{figure}[H]
+\begin{center} \includegraphics [width=15cm]{gloal_final.png} \end{center}
+\caption{Hourly variation of the Global Heat Flux of the four studied models}\label{globalhearflux}
+\end{figure}
+
+
+
+
+\begin{multicols}{2}
+%conclusion
+\section{Conclusion}
+The present work aimed to analyze coupled heat transfer by conduction and  natural convection in a transient state through four types of vertically perforated bricks which are mainly used in the construction of buildings walls. The analysis was carried out in ANSYS 2021 R1 ACADEMIC and the following conclusions are extracted based on the results obtained out of numerical analysis.
+
+\begin{itemize}
+\item In the type D where the cavity was entirely filled with the insulating material resulted in the best reduction, about 57\% more than Type A in heat transfer which is favourable for thermal comfort.
+\item The reduction in overall heat transfer can be increased by increasing the thickness of the insulating material.
+\item The variation in the overall heat flux is periodic in nature which is synchronizing with the applied sinusoidal excitation.
+
+\end{itemize}
+
+
+
+
+
+\end{multicols}
+
+
+\nocite{*}
+\printbibliography
+
+\end{document}
